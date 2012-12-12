@@ -1,7 +1,7 @@
 TraceKit
 ========
 
-[![Build Status](https://travis-ci.org/occ/TraceKit.png)](https://travis-ci.org/occ/TraceKit)
+[![Build Status](https://travis-ci.org/occ/TraceKit.png?branch=master)](https://travis-ci.org/occ/TraceKit)
 
 ### Tracekit is a JavaScript library that automatically normalizes and exposes stack traces for unhandled exceptions across the 5 major browsers: IE, Firefox, Chrome, Safari, and Opera. ###
 
@@ -48,7 +48,11 @@ In theory, TraceKit should work on all of the following versions:
 
 TraceKit will attempt to fetch an analyze source files, but you can turn this off using:
 
-    TraceKit.remoteFetching = false
+    TraceKit.remoteFetching = false;
+
+You can also tell TraceKit to ignore global window errors with:
+
+    TraceKit.collectWindowErrors = false;
 
 ## Contributing
 
