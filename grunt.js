@@ -14,7 +14,9 @@ module.exports = function (grunt) {
       app: "tracekit.coffee"
     },
     coffeelintOptions: {
-      "max_line_length": 120
+      "max_line_length": {
+        level: "ignore"
+      }
     },
     jshint: {
       options: {

@@ -233,7 +233,7 @@ class TraceKit
         stack.push item
       i += 2
     return null unless stack.length # could not parse multiline exception message as Opera stack trace
-    return ( 
+    return (
       mode: "multiline"
       name: ex.name
       message: lines[0]
@@ -509,7 +509,7 @@ class TraceKit
 
     while i < j
       context.push source[i]
-      hasContext = true if source[i] isnt `undefined`
+      hasContext = true if source[i]?
       ++i
     (if hasContext then context else null)
 
@@ -552,7 +552,7 @@ class TraceKit
 
     while i < maxLines
       line = source[lineNo - i] + line
-      if line isnt `undefined`
+      if line?
         if m = reGuessFunction.exec(line)
           return m[1]
         else return m[1] if m = reFunctionArgNames.exec(line)
@@ -579,7 +579,7 @@ class TraceKit
     return "" unless @remoteFetching
     try
       # IE 5.x-6.x
-      if typeof XMLHttpRequest is "undefined" 
+      if typeof XMLHttpRequest is "undefined"
         XMLHttpRequestWrapper = IEXMLHttpRequestSub = ->
           try
             return new ActiveXObject("Msxml2.XMLHTTP.6.0")
