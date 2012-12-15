@@ -1,59 +1,77 @@
 /*global module:false*/
-module.exports = function(grunt) {
-  'use strict';
-  
+module.exports = function (grunt) {
+  "use strict";
+
   // Project configuration.
   grunt.initConfig({
-    lint: {
-      files: ['grunt.js', 'tracekit.js']
+    coffee: {
+      app: {
+        src: ["tracekit.coffee"],
+        dest: "dist"
+      }
     },
-    watch: {
-      files: '<config:lint.files>',
-      tasks: 'lint'
+    coffeelint: {
+      app: "tracekit.coffee"
+    },
+    coffeelintOptions: {
+      "max_line_length": 120
     },
     jshint: {
       options: {
-        // Uncommented are default grunt options
-        bitwise: true, //Added from site
+        boss: true, //dont" allow assignments to be evaluated as truthy/falsey */
+        bitwise: true,
+        browser: true,
         curly: true,
+        devel: true,
         eqeqeq: true,
+        eqnull: true,
+        es5: true,
         immed: true,
+        indent: 2,
         latedef: true,
+        maxdepth: 9,
+        maxerr: 20,
+        maxparams: 6,
         newcap: true,
         noarg: true,
-        noempty: true, //Added from site
-        nonew: true, //Added
-        quotmark: 'single', //Added
-        /* regexp: true, */
-        undef: true,
-        unused: true, //Added from site
-        /* strict: true, //Added from site */
+        noempty: true,
+        nonew: true,
+        onecase: true,
+        quotmark: "double",
+        regexp: false,
+        shadow: true,
+        strict: true,
         sub: true,
-        boss: true, //dont' allow assignments to be evaluated as truthy/falsey */
-        eqnull: true, //Allow == null
-        browser: true,
-        /* indent: 4, //Added from site */
-        devel: true, //Added
-        white: false,
-        
-        es5:       true,
-        onecase:   true,
-        
-        //Adding a few of nice restrictions:
         trailing: true,
-        maxparams: 6,
-        maxdepth: 9,
-        maxerr: 20
+        undef: true,
+        unused: true,
+        white: false
       },
       globals: {
         ActiveXObject: false
       }
-    }
+    },
+    lint: {
+      files: ["grunt.js", "dist/tracekit.js"]
+    },
+    min: {
+      dist: {
+        src: ["dist/tracekit.js"],
+        dest: "dist/tracekit.min.js"
+      }
+    },
+    watch: {
+      files: ["<config:lint.files>", "tracekit.coffee"],
+      tasks: "coffee lint"
+    },
   });
 
+  grunt.loadNpmTasks("grunt-coffee");
+  grunt.loadNpmTasks("grunt-coffeelint");
+
   // Default task.
-  grunt.registerTask('default', 'lint watch');
+  grunt.registerTask("default", "coffee coffeelint lint min watch");
 
   // Travis-CI task.
-  grunt.registerTask('travis', 'lint');
+  grunt.registerTask("travis", "coffee coffeelint lint min");
 };
