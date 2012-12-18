@@ -501,17 +501,16 @@ class TraceKit
   _gatherContext = (url, line) ->
     source = _getSource url
     context = []
-    hasContext = false
     return null unless source.length
+
     line -= 1 # convert to 0-based index
-    i = line - 2
-    j = line + 2
+    i = Math.max 0, line - 2
+    j = Math.min source.length, line + 2
 
     while i < j
       context.push source[i]
-      hasContext = true if source[i]?
       ++i
-    (if hasContext then context else null)
+    return (if context.length > 0 then context else null)
 
   ###
   Retrieves source code from the source code cache.
